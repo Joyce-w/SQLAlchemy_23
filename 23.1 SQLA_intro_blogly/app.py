@@ -49,3 +49,41 @@ def show_user(user_id):
     """Reterive and display data on user"""
     user = User.query.get_or_404(user_id)
     return render_template('detail.html', user=user)
+
+@app.route('/users/<int:user_id>/edit')
+def edit_user(user_id):
+    """Edit user information"""
+    users = User.query.filter(User.id == user_id).first()
+    return render_template('edit_user.html', users=users)
+
+# Edit user information (update in db)
+@app.route('/users/<int:user_id>/edit', methods=["POST"])
+def edit_user_info(user_id):
+    """Edit user information"""
+
+    user = User.query.get_or_404(user_id)
+
+    edited_first = request.form["first_name"]
+    edited_last = request.form["last_name"]
+    edited_url = request.form["picture"]
+
+    user.first_name = edited_first
+    user.last_name = edited_last
+    user.image_url = edited_url
+
+    db.session.add(user)
+    db.session.commit()
+    
+    # commit new data? 
+    return render_template('edit_user.html', users=users)
+
+@app.route('/users/<int:user_id>/delete', methods=["POST"])
+def delete_user(user_id):
+    """Delete current user from db"""
+    
+    del_user_id = request.form["delete"]
+
+    user = User.query.filter_by(id=del_user_id).delete()
+    db.session.commit()
+
+    return redirect('/users')

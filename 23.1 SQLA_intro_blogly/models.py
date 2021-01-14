@@ -10,6 +10,11 @@ def connect_db(app):
 class User(db.Model):
     #define table name in db
     __tablename__ = "users"
+
+    def __repr__(self):
+        p = self
+        return f"<User id ={p.id} first_name = {p.first_name} last_name = {p.last_name}>"
+
     #define indiv col in users table 
     id = db.Column(db.Integer,
                 primary_key=True,
