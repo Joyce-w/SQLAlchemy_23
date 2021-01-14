@@ -42,6 +42,9 @@ def create_user():
     db.session.add(new_user)
     db.session.commit()
 
+    import pdb
+    pdb.set_trace()
+
     return redirect('/users')
 
 @app.route('/users/<int:user_id>')
@@ -78,7 +81,7 @@ def edit_user_info(user_id):
     user.first_name = edited_first
     user.last_name = edited_last
     user.image_url = edited_url
-    
+
     db.session.add(user)
     db.session.commit()
     
