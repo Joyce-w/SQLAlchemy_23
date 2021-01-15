@@ -15,6 +15,9 @@ class User(db.Model):
         u = self
         return f"<User id ={u.id} first_name = {u.first_name} last_name = {u.last_name}>"
 
+    # Reference to Post
+    post = db.relationship('Post')
+
     #define indiv col in users table 
     id = db.Column(db.Integer,
                 primary_key=True,
@@ -37,6 +40,9 @@ class Post(db.Model):
     # def __repr__(self):
     #     p = self
     #     return f"<Post >"
+
+    # Reference Users
+    post = db.relationship('User')
 
     #define pk col for post table
     id = db.Column(db.Integer,

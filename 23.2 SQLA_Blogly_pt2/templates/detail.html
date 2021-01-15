@@ -4,26 +4,34 @@
 
         <p>First Name: {{user.first_name}}</p>
         <p>Last Name: {{user.last_name}}</p>
-        <img src="{{user.image_url}}">
+        <img src="{{user.image_url}}" class="img-thumbnail">
         <br>
 
         <!-- Edit user -->
-
                 <div class="col-sm">
-                        <a href = "/users/{{user.id}}/edit" class="btn btn-primary">Edit User</a> 
+                        <a href = "/users/{{user.id}}/edit" class="btn btn-success">Edit User</a> 
                 </div>
         
-                <div class="col-sm">
-                        <!-- Delete user -->
-        <form action="/users/{{user.id}}/delete", method="POST">
-                </div>
+        <!-- Delete user -->          
+                <form action="/users/{{user.id}}/delete", method="POST">
+
                 <div class="col-sm">
                         <button class="btn btn-danger" name = "delete" value="{{user.id}}">Delete User</button>
                 </div>
 
-        </form>
+                </form>
 
-        <a href="/users" class="btn btn-success">Back to List</a>    
+        <!--List current post form user  -->
+        <h4>Posts</h4>
+        <p>{{user.post[0].title}}</p>
+
+        <!-- button to create new post -->
+        <a href= "/users/{{user.id}}/posts/new"class="btn btn-primary">Add Post</a>
+
+        <!-- return to list of users -->
+       <p>
+           <a href="/users" class="btn btn-outline-info">Back to List</a>        
+       </p> 
 
 
 

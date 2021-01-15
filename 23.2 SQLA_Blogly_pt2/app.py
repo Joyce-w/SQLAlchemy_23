@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template,  redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User
-
+from models import db, connect_db, User, Post
+from datetime import datetime
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -14,6 +14,7 @@ debug = DebugToolbarExtension(app)
 connect_db(app)
 db.create_all()
 
+
 @app.route('/')
 def homepage():
     """Redirect to list of users"""
@@ -25,6 +26,8 @@ def get_users():
     """Shows all the users"""
     users = User.query.all()
     return render_template('users.html', users=users)
+
+#---------------New User ROUTES -------------------------#
 
 @app.route('/users/new')
 def new_user_form():
@@ -44,11 +47,17 @@ def create_user():
 
     return redirect('/users')
 
+#---------------User details ROUTE -------------------------#
+
 @app.route('/users/<int:user_id>')
 def show_user(user_id):
     """Reterive and display data on user"""
     user = User.query.get_or_404(user_id)
+
     return render_template('detail.html', user=user)
+
+
+#---------------User Edit ROUTES -------------------------#
 
 @app.route('/users/<int:user_id>/edit')
 def edit_user(user_id):
@@ -85,6 +94,8 @@ def edit_user_info(user_id):
     # commit new data? 
     return redirect('/users')
 
+#---------------User Deletion ROUTE ------------------#
+
 @app.route('/users/<int:user_id>/delete', methods=["POST"])
 def delete_user(user_id):
     """Delete current user from db"""
@@ -95,3 +106,28 @@ def delete_user(user_id):
     db.session.commit()
 
     return redirect('/users')
+
+#---------------POST ROUTES -------------------------#
+
+@app.route('/users/<int:user_id>/posts/new')
+def new_post(user_id):
+    """Directs to form for a new post"""
+    return render_template('post.html')
+    
+
+@app.route('/users/<int:user_id>/posts/new', methods=["POST"])
+def user_post(user_id):
+    """Directs to form for a new post"""
+    user = User.query.get_or_404(user_id)
+
+    post_title = request.form["title"]
+    post_content = request.form["content"]
+    post_datetime = datetime.now()
+    user_posted = user.id
+
+    new_post = Post(title=post_title, content=post_content, created_at =post_datetime, user_id=user_posted)
+
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
