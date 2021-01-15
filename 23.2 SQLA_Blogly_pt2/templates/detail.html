@@ -5,15 +5,28 @@
         <p>First Name: {{user.first_name}}</p>
         <p>Last Name: {{user.last_name}}</p>
         <img src="{{user.image_url}}">
+        <br>
 
         <!-- Edit user -->
-        <a href = "/users/{{user.id}}/edit">Edit User</a> 
 
-        <!-- Delete user -->
+                <div class="col-sm">
+                        <a href = "/users/{{user.id}}/edit" class="btn btn-primary">Edit User</a> 
+                </div>
+        
+                <div class="col-sm">
+                        <!-- Delete user -->
         <form action="/users/{{user.id}}/delete", method="POST">
-                <button name = "delete" value="{{user.id}}">Delete User</button>
+                </div>
+                <div class="col-sm">
+                        <button class="btn btn-danger" name = "delete" value="{{user.id}}">Delete User</button>
+                </div>
+
         </form>
-        <p><a href="/users">Back to List</a></p>
+
+        <a href="/users" class="btn btn-success">Back to List</a>    
+
+
+
 
 
 {% endblock %}
