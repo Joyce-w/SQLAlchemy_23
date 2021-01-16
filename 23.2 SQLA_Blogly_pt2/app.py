@@ -65,10 +65,9 @@ def edit_user(user_id):
     users = User.query.filter(User.id == user_id).first()
     return render_template('edit_user.html', users=users)
 
-# Edit user information (update in db)
 @app.route('/users/<int:user_id>/edit', methods=["POST"])
 def edit_user_info(user_id):
-    """Edit user information"""
+    """Edit user information, update to db"""
 
     #get user_id number
     user = User.query.get_or_404(user_id)
@@ -112,7 +111,7 @@ def delete_user(user_id):
 @app.route('/users/<int:user_id>/posts/new')
 def new_post(user_id):
     """Directs to form for a new post"""
-    return render_template('post.html')
+    return render_template('post_form.html')
     
 
 @app.route('/users/<int:user_id>/posts/new', methods=["POST"])
@@ -131,3 +130,58 @@ def user_post(user_id):
     db.session.commit()
 
     return redirect(f"/users/{user_id}")
+
+
+@app.route("/users/posts/<int:post_id>")
+def post_details(post_id):
+    """Show page for particular posting"""
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('post_details.html', post=post)
+
+
+@app.route("/users/posts/<int:post_id>/edit")
+def post_edit(post_id):
+    """Route to edit post"""
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template("post_edit.html", post=post)
+
+@app.route("/users/posts/<int:post_id>/edit", methods=["POST"])
+def post_update_edits(post_id):
+
+    #get post information from db
+    post = Post.query.get_or_404(post_id)
+
+    # save input values
+    
+    e_title = request.form["title"]
+    e_title = e_title if e_title else post.title
+
+    e_content = request.form["content"]
+    e_content = e_content if e_content else post.content
+
+    e_datetime = datetime.now()
+
+    #Make changes to session
+    post.title = e_title
+    post.content = e_content
+    post.created_at = e_datetime
+
+    db.session.add(post)
+    db.session.commit()
+    
+    return redirect(f"/users/posts/{post.id}")
+
+@app.route("/users/posts/<int:post_id>/delete", methods=["POST"])
+def delete_post(post_id):
+    """Delete route for route"""
+
+    del_post_id = request.form["delete"]
+
+    post = Post.query.filter_by(id=del_post_id).delete()
+    db.session.commit()
+
+    return redirect('/users')

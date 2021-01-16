@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+{% block content %} 
+
+
+
+<div>
+    <h3>{{post.title}}</h3>
+    <p>Date Published: {{post.created_at}}</p>
+    <p>{{post.content}}</p>
+</div>
+
+<div>
+    <a href="/users/posts/{{post.id}}/edit" class="btn btn-success">Edit Post</a>
+    
+
+    <form action="/users/posts/{{post.id}}/delete", method="POST">
+        <button class="btn btn-danger" name = "delete" value="{{post.id}}">Delete Post</button>
+    </form>
+</div>
+{% endblock %}

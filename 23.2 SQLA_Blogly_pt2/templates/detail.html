@@ -1,37 +1,55 @@
 {% extends 'base.html'%}
 
-{% block content %} 
+{% block content %}
 
-        <p>First Name: {{user.first_name}}</p>
-        <p>Last Name: {{user.last_name}}</p>
-        <img src="{{user.image_url}}" class="img-thumbnail">
-        <br>
+<p>First Name: {{user.first_name}}</p>
+<p>Last Name: {{user.last_name}}</p>
+<img src="{{user.image_url}}" class="img-thumbnail">
+<br>
 
+
+<div class="row col-4">
         <!-- Edit user -->
-                <div class="col-sm">
-                        <a href = "/users/{{user.id}}/edit" class="btn btn-success">Edit User</a> 
-                </div>
-        
-        <!-- Delete user -->          
-                <form action="/users/{{user.id}}/delete", method="POST">
+        <div class="col-6">
+                <a href="/users/{{user.id}}/edit" class="btn btn-success">Edit User</a>
+        </div>
 
-                <div class="col-sm">
-                        <button class="btn btn-danger" name = "delete" value="{{user.id}}">Delete User</button>
-                </div>
+        <!-- Delete user -->
+        <div class="col-6">
+                <form action="/users/{{user.id}}/delete" , method="POST">
+                        <button class="btn btn-danger" name="delete" value="{{user.id}}">Delete User</button>
 
                 </form>
+        </div>
+</div>
 
-        <!--List current post form user  -->
+<!--List current post form user  -->
+<div class="container">
         <h4>Posts</h4>
-        <p>{{user.post[0].title}}</p>
+        <ul>
+                {% if user.post %}
+                {% for post in user.post %}
+                <li>
+                        <!-- create link to post -->
+                        <a href="/users/posts/{{post.id}}">{{post.title}}</a>
+
+                </li>
+                {% endfor %}
+                {% else %}
+                <p>No Post Yet!</p>
+                {% endif %}
+        </ul>
 
         <!-- button to create new post -->
-        <a href= "/users/{{user.id}}/posts/new"class="btn btn-primary">Add Post</a>
+        <a href="/users/{{user.id}}/posts/new" class="btn btn-primary">Add Post</a>
 
-        <!-- return to list of users -->
-       <p>
-           <a href="/users" class="btn btn-outline-info">Back to List</a>        
-       </p> 
+</div>
+
+<br>
+<!-- return to list of users -->
+<p>
+        <a href="/users" class="btn btn-outline-info">Back to List</a>
+</p>
 
 
 
