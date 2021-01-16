@@ -45,27 +45,18 @@ class UsersViewsTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIn('TestFirstName', html)
 
-    def test_user_info(self):
-        with app.test_client() as client:
-            resp = client.get("/users/6")
-            html = resp.get_data(as_text=True)
-
-            self.assertEqual(resp.status_code, 200)
-            self.assertIn('<p>First Name: TestFirstName</p>', html)
-
     def test_new_user(self):
         with app.test_client() as client:
             test_d = {"first_name":"Test Person", "last_name":"LAST2TEST", "image_url":"test.com"}
-            # breakpoint()
+
             resp = client.post("/users/new", data=test_d, follow_redirects=True)
             html = resp.get_data(as_text=True)
-
             self.assertEqual(resp.status_code, 200)
             self.assertIn('Test Person', html)
-        
-    def test_del_user(self):
+
+    def del_user(self):
         with app.test_client() as client:
-            resp = client.post("/users/7/delete", data=d, follow_redirects=True)
+            resp = client.post("users/{self.user_id}/delete", follow_redirects=True)
             html = resp.get_data(as_text=True)
 
-            self.assertEqual(resp.status_code, 200)
+            self .assertEqual(resp.status_code, 200)
