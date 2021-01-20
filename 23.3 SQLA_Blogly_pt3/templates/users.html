@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+
+{% block content %} 
+
+<!-- attempt2  -->
+<div class="container">
+    <div class="row">
+    {% for user in users %}
+    <div class="m-2 card" style="width: 18rem;">
+        {% if user.image_url%}
+        <img src={{user.image_url}} class="card-img-top">
+        {% else %}
+        {% endif %}
+        <div class="card-body">
+
+            <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+            <p class="card-text">
+                {% if user.post %}
+                {% for post in user.post %}
+                <li>
+                    <!-- create link to post -->
+                    <a href="/users/posts/{{post.id}}">{{post.title}}</a>
+
+                </li>
+                {% endfor %}
+                {% else %}
+                <p>No Post Yet!</p>
+                {% endif %}
+            </p>
+
+                {{user.post.title}}
+            <a href="/users/{{user.id}}" class="btn btn-primary">More Details on {{user.first_name}}</a>
+        </div>
+    </div>
+    {% endfor %}        
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
+
