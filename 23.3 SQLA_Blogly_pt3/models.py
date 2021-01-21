@@ -70,8 +70,13 @@ class Post(db.Model):
                 db.ForeignKey('users.id'))
 
 class PostTag(db.Model):
+
     # creat table name
     __tablename__ = "posttags"
+
+    def __repr__(self):
+        pt = self
+        return f"<PostTag post_id ={pt.post_id}, tag_id = {pt.tag_id}>"
 
     # define post_id
     post_id = db.Column(db.Integer,
@@ -88,6 +93,12 @@ class PostTag(db.Model):
 class Tag(db.Model):
     # creat table name
     __tablename__ = "tags"
+    
+    def __repr__(self):
+        t = self
+        return f"<Tag id ={t.id}, name = {t.name}>"
+
+    posttag = db.relationship('PostTag', backref="tags")
 
     # define id
     id = db.Column(db.Integer,

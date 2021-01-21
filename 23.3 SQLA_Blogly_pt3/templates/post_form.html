@@ -2,6 +2,7 @@
 
 {% block content %} 
 
+  
 
 <div class="container">
   <div class="row col-6">
@@ -17,6 +18,19 @@
         <label for="PostContent" class="form-label">Content</label>
         <textarea class="form-control" id="PostContent" rows="3" name="content"></textarea>
       </div>
+
+      <!-- Add tag options -->
+      <p>
+        <b>Attach a tag to your post:</b>
+
+        {% for tag in tag_list%}
+        <div>
+          <input type="checkbox" id="tag" name="tags" value={{tag.id}}>
+          <label for="tag">{{tag.name}}</label>
+        </div>
+        {% endfor %}
+      </p>
+
       <button class="btn btn-success">Post</button>
     </form>
 

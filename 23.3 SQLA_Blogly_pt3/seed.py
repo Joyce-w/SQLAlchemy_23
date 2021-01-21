@@ -11,10 +11,10 @@ User.query.delete()
 Post.query.delete()
 
 # Add users
-bilbo = User(first_name='Bilbo', last_name="Baggins")
-gandalf = User(first_name='Gandalf', last_name="White", image_url="www.whatthis.com")
-leoglas = User(first_name='Leoglas', last_name="Elf")
-sam = User(first_name="Sam", last_name="Wise")
+bilbo = User(first_name='Bilbo', last_name="Baggins", image_url="https://static.wikia.nocookie.net/lotr/images/b/b6/The_Hobbit_wallpaper_48.jpg")
+gandalf = User(first_name='Gandalf', last_name="White", image_url="https://cms.qz.com/wp-content/uploads/2018/08/gandalf-lord-of-the-rings-e1534255368438.jpg")
+leoglas = User(first_name='Leoglas', last_name="Elf", image_url="https://i.pinimg.com/originals/04/80/29/048029f362c484a2a46b928afbe98837.jpg")
+sam = User(first_name="Sam", last_name="Wise", image_url="https://static.wikia.nocookie.net/lotr/images/2/20/Sam.jpg")
 
 
 # Add new objects to session, so they'll persist

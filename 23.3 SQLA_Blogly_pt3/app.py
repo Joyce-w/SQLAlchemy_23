@@ -111,12 +111,17 @@ def delete_user(user_id):
 @app.route('/users/<int:user_id>/posts/new')
 def new_post(user_id):
     """Directs to form for a new post"""
-    return render_template('post_form.html')
+
+    tag_list = Tag.query.all()
+
+    return render_template('post_form.html', tag_list=tag_list)
     
 
 @app.route('/users/<int:user_id>/posts/new', methods=["POST"])
 def user_post(user_id):
     """Directs to form for a new post"""
+
+    # Get post information
     user = User.query.get_or_404(user_id)
 
     post_title = request.form["title"]
@@ -125,9 +130,21 @@ def user_post(user_id):
     user_posted = user.id
 
     new_post = Post(title=post_title, content=post_content, created_at =post_datetime, user_id=user_posted)
+    
+
+    # get tag information    
+    tag_option = request.form.getlist("tags")
+        
+    # query db for tags, returns list of queries
+    tags = Tag.query.filter(Tag.id.in_(tag_option)).all()
+    
+    # loop thru 
+    for tag in tags:
+        new_post.tags.append(tag)
 
     db.session.add(new_post)
     db.session.commit()
+
 
     return redirect(f"/users/{user_id}")
 

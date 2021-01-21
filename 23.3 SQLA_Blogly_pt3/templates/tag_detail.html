@@ -7,7 +7,11 @@
     <div class="container">
         <div class="row col-6">
             <h2>Posts for #{{tag.name}}</h2>
-            <p>{{tag.title}}</p>
+            {% for post in tag.posts %}
+            
+            <!-- hrefs don't work yet, find title with post_id -->
+                <a href="/users/posts/{tag.posttag.post_id}">{{post.title}} </a>
+            {% endfor %}
 
             <a href="/tags/{{tag.id}}/edit"><button class="btn btn-success">Edit </button></a>
 
