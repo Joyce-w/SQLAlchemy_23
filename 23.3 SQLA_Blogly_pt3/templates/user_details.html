@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+    <div class="user_card" style="margin:5%">
+        <h4>{{user.first_name}} {{user.last_name}}</h4>
+
+        <img src="{{user.image_url}}" class="img-thumbnail">
+        <br>
+
+
+        <div class="row col-4">
+            <!-- Edit user -->
+            <div class="col-6">
+                <a href="/users/{{user.id}}/edit" class="btn btn-success">Edit User</a>
+            </div>
+    </div>
+    
+
+        <!-- Delete user -->
+        <div class="col-6">
+            <form action="/users/{{user.id}}/delete" , method="POST">
+                <button class="btn btn-danger" name="delete" value="{{user.id}}">Delete User</button>
+
+            </form>
+        </div>
+    </div>
+
+    <!--List current post form user  -->
+    <div class="card" style="width: 18rem; margin:0% 5%; padding: 1em;">
+        <h4>Posts</h4>
+        <ul>
+            {% if user.post %}
+            {% for post in user.post %}
+            <li>
+                <!-- create link to post -->
+                <a href="/users/posts/{{post.id}}">{{post.title}}</a>
+
+            </li>
+            {% endfor %}
+            {% else %}
+            <p>No Post Yet!</p>
+            {% endif %}
+        </ul>
+
+        <!-- button to create new post -->
+        <a href="/users/{{user.id}}/posts/new" class="btn btn-primary">Add Post</a>
+
+    </div>
+
+    <br>
+    <!-- return to list of users -->
+    <p>
+        <a href="/users" class="btn btn-outline-info" style="margin:0% 5%">Back to List</a>
+    </p>
+
+
+
+
+    </div>
+
+
+
+
+{% endblock %}

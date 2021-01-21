@@ -54,7 +54,7 @@ def show_user(user_id):
     """Reterive and display data on user"""
     user = User.query.get_or_404(user_id)
 
-    return render_template('detail.html', user=user)
+    return render_template('user_details.html', user=user)
 
 
 #---------------User Edit ROUTES -------------------------#
