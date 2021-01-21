@@ -15,8 +15,10 @@ class User(db.Model):
         u = self
         return f"<User id ={u.id} first_name = {u.first_name} last_name = {u.last_name}>"
 
-    # Reference to Post
-    post = db.relationship('Post')
+    # Reference to Post(1-to-1)
+    post = db.relationship('Post',
+                    backref="users",
+                    cascade="all,delete")
 
     #define indiv col in users table 
     id = db.Column(db.Integer,
@@ -35,14 +37,16 @@ class User(db.Model):
 
 class Post(db.Model):
     #Create model for blog posts
-    __tablename__ = "post"
+    __tablename__ = "posts"
 
-    # def __repr__(self):
-    #     p = self
-    #     return f"<Post >"
+    def __repr__(self):
+        p = self
+        return f"<User id ={p.id} title = {p.title} content = {p.content}>"
 
-    # Reference Users
-    post = db.relationship('User')
+    # Relation between Post and PostTag
+    tags = db.relationship('Tag',
+                secondary="posttags",
+                backref="posts")
 
     #define pk col for post table
     id = db.Column(db.Integer,
@@ -63,3 +67,35 @@ class Post(db.Model):
     #FK for User.id
     user_id = db.Column(db.Integer,
                 db.ForeignKey('users.id'))
+
+class PostTag(db.Model):
+    # creat table name
+    __tablename__ = "posttags"
+
+    # define post_id
+    post_id = db.Column(db.Integer,
+                db.ForeignKey('posts.id'),
+                primary_key=True,
+                nullable=True)
+
+    tag_id = db.Column(db.Integer,
+                db.ForeignKey('tags.id'),
+                primary_key=True,
+                nullable=True)
+
+
+class Tag(db.Model):
+    # creat table name
+    __tablename__ = "tags"
+
+    # define id
+    id = db.Column(db.Integer,
+                primary_key=True,
+                autoincrement=True)
+        
+    # define unique name column        
+    name = db.Column(db.Text,
+                nullable=True,
+                unique=True)    
+
+
