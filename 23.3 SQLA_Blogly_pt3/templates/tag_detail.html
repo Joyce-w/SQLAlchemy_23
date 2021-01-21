@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+
+
+    <div class="container">
+        <div class="row col-6">
+            <h2>Posts for #{{tag.name}}</h2>
+            <p>{{tag.title}}</p>
+
+            <a href="/tags/{{tag.id}}/edit"><button class="btn btn-success">Edit </button></a>
+
+            <form action="/tags/{{tag.id}}/delete" method="POST">
+                <button class="btn btn-danger" name="delete" value="{{tag.id}}">Delete</button>
+            </form>
+            
+        </div>
+    </div>
+
+{% endblock %}

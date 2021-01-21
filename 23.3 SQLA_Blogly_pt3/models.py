@@ -19,6 +19,7 @@ class User(db.Model):
     post = db.relationship('Post',
                     backref="users",
                     cascade="all,delete")
+    
 
     #define indiv col in users table 
     id = db.Column(db.Integer,
@@ -98,4 +99,4 @@ class Tag(db.Model):
                 nullable=True,
                 unique=True)    
 
-
+    

@@ -5,16 +5,13 @@
 <div class="container">
   <div class="row col-6">
 
-    <form action="/users/posts/{{post.id}}/edit" method="POST">
+    <form>
         <h3>Add A Post </h3>
       <div class="mb-3">
         <label for="PostTitle" class="form-label">New Title</label>
         <input type="text" class="form-control" id="PostTitle" name="title" placeholder={{post.title}}>
       </div>
-      <div class="mb-3">
-        <label for="PostContent" class="form-label">New Content</label>
-        <textarea class="form-control" id="PostContent" rows="3" name="content" placeholder={{post.content}}></textarea>
-      </div>
+
       <button class="btn btn-success">Edit</button>
     </form>
 

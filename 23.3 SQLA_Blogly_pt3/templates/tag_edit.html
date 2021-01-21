@@ -1,0 +1,23 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="row col-6">
+
+            <form method="POST">
+                <h3>Edit tag</h3>
+                <div class="mb-3">
+                    <label for="EditTag" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="EditTag" name="tag" placeholder={{tag.name}}>
+                </div>
+
+                <button class="btn btn-success">Edit</button>
+            </form>
+            
+
+    </div>
+
+
+{% endblock %}
